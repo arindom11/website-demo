@@ -1,17 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  TODO: replace example.com with the real domain before launch.
-
-  NOTE: this site is hash-routed (#/shop, #/product/...) because §1 of the
-  brand guideline requires a single index.html with no build step. Search
-  engines treat every hash URL as the same page, so only the root is listed
-  here. If organic search matters for launch, the routes below need to become
-  real server paths — see DEPLOY.md.
--->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://example.com/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
+  <url><loc>https://example.com/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://example.com/shop/</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://example.com/new/</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://example.com/the-loom/</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://example.com/journal/</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://example.com/about/</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://example.com/size-guide/</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://example.com/shipping/</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://example.com/contact/</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://example.com/privacy/</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://example.com/terms/</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://example.com/returns/</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://example.com/grievance/</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://example.com/shop/shirts/</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://example.com/shop/kurtas/</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://example.com/shop/overshirts/</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://example.com/shop/trousers/</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://example.com/shop/dresses/</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://example.com/shop/co-ords/</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://example.com/shop/sarees/</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://example.com/shop/stoles/</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://example.com/shop/loungewear/</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://example.com/shop/fabric/</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://example.com/product/handspun-indigo-shirt/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://example.com/product/ikat-panel-kurta/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://example.com/product/ajrakh-block-overshirt/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://example.com/product/jamdani-cotton-stole/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://example.com/product/khadi-cotton-shirt/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://example.com/product/straight-kurta-handspun/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://example.com/product/wide-leg-handloom-trouser/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://example.com/product/sambalpuri-ikat-saree/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://example.com/product/kantha-stitch-jacket/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://example.com/product/ajrakh-kaftan/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://example.com/product/handloom-co-ord-set/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://example.com/product/handloom-lounge-set/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://example.com/product/undyed-kora-fabric/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
 </urlset>

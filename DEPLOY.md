@@ -1,101 +1,133 @@
 # Deploying West India Company
 
-The site is a static build. There is no build step, no framework and no server code —
-`index.html` plus the `images/` folder is the whole thing (§11).
+**This is a practice project.** A portfolio build, not a real shop. No orders are taken,
+no payments are processed, and no company is registered behind it. That is stated in the
+footer of every page and at the top of every policy page, so nobody can mistake it for a
+live store.
 
-**Nothing has been deployed. Do not deploy until the blockers below are cleared.**
+Target host: **Vercel**. Nothing has been deployed — deploy only when you say so.
+
+---
+
+## Deploying
+
+The site is static. There is no build step and no server code.
+
+```
+npx vercel            # preview deployment
+npx vercel --prod     # production
+```
+
+Vercel serves the repo root. `vercel.json` sets `cleanUrls`, `trailingSlash` and the
+security headers; `.vercelignore` keeps development files off the deployment.
+
+### Set your real domain first
+
+Absolute URLs (canonical, `og:url`, `og:image`, `sitemap.xml`, `robots.txt`) are baked in
+by the pre-render step, which takes the domain as an argument:
+
+```
+node serve.mjs                                   # terminal 1
+node prerender.mjs https://your-domain.vercel.app  # terminal 2
+```
+
+Re-run that whenever the domain changes or the catalogue changes, then commit the result.
+Without it, every absolute URL says `example.com` and link previews will break.
+
+---
+
+## How routing works
+
+The site is a single hash-routed `index.html` (guideline §1: one file, no build step).
+On its own that would mean only the homepage is indexable, since search engines treat every
+`#/...` URL as the same page.
+
+`prerender.mjs` fixes that **without adding a deploy-time build**. Run by hand, it writes a
+real HTML file per route — 35 of them — each with its own title, meta description, canonical
+and Open Graph tags, and each handing over to the app on load:
+
+```
+/                             index.html
+/shop/  /shop/shirts/  …      11 pages
+/product/<slug>/              13 pages
+/new/ /the-loom/ /journal/ /about/ /size-guide/
+/shipping/ /contact/ /privacy/ /terms/ /returns/ /grievance/
+```
+
+Verified: a cold load of `/product/handspun-indigo-shirt/` renders the product view directly,
+images resolve, and clicking through to another route does **not** reload the page.
+
+Asset paths are root-absolute (`/images/…`) so they resolve identically from `/` and from
+`/product/<slug>/`. That means the site must be served from a domain root, not a subfolder.
 
 ---
 
 ## What ships
 
 ```
-index.html            the entire site (markup, CSS, JS)
-images/               54 WebP files (27 slots x 1x and @2x)
-brand assets/         source logos and the guideline — NOT needed at runtime
-favicon.svg
-apple-touch-icon.png
-og-image.jpg
-robots.txt
-sitemap.xml
+index.html                the app
+shop/ product/ …          35 pre-rendered entry pages
+images/                   54 WebP files (27 slots x 1x and @2x)
+404.html                  host-level not-found page
+favicon.svg  apple-touch-icon.png  og-image.jpg
+robots.txt  sitemap.xml
+vercel.json  .vercelignore
+_headers                  only if you switch to Netlify/Cloudflare
 ```
 
-`node_modules/`, `serve.mjs`, `screenshot.mjs`, `package*.json` and
-`temporary screenshots/` are development-only. Do not upload them.
-
-## How to deploy (when cleared)
-
-Any static host works — Netlify, Vercel, Cloudflare Pages, GitHub Pages, S3 + CloudFront.
-Publish directory is the project root. No install command, no build command.
-
-Because routing is hash-based, **no rewrite rules are needed** — every URL is served by
-`index.html` already.
+Excluded by `.vercelignore`: `node_modules/`, `temporary screenshots/`, `brand assets/`,
+`serve.mjs`, `screenshot.mjs`, `prerender.mjs`, `package*.json`, `CLAUDE.md`, this file.
 
 ---
 
-## Blockers before launch
+## Measured
 
-### 1. Legally required, currently missing
+On 4G with 4x CPU throttling:
 
-Indian e-commerce rules (§13) require all of these. They are marked `TODO` in the
-markup and on the Contact page. None can be invented:
+| Metric | Result | Budget (§11) |
+|---|---|---|
+| LCP | 884 ms | 2500 ms |
+| CLS | 0.0089 | 0.1 |
+| Page weight | ~1.1 MB all images at 1x, 298 KB above the fold | 1.5 MB |
 
-- Registered business name, registered address, GSTIN (footer + Contact)
-- A published returns and refunds policy: window, who pays return shipping, refund timeline
-- Grievance officer name and contact, per the Consumer Protection (E-Commerce) Rules
-- Privacy policy and terms of sale
-
-### 2. Substantive claims not yet evidenced
-
-- **"Handmade, no machines"** is a commercial claim, not a slogan. §13 wants it backed by
-  Handloom Mark, Craftmark or Silk Mark, with the site saying which.
-- **Trademark clearance** for "West India Company" is outstanding (§15.1). The name echoes a
-  live UK trademark and carries a colonial association in the domestic market.
-
-### 3. Placeholder data
-
-- All 13 products, prices, stock counts and Loom Records are placeholders. Prices follow the
-  §1.1 bands and the ₹2,890 anchor, but nothing is real.
-- The "Woven by" row of the Loom Record is **deliberately omitted**, not filled with a
-  placeholder — §13 forbids inventing artisan names, and §4 says fill the row or omit it.
-  Add it once real sourcing records exist.
-- The homepage tally (31 weavers / 4 clusters / 2,940 days) is unverified.
-- Clusters (Nuapatna, Sambalpur, Bhuj, Ajrakhpur) are the guideline's own examples (§15.2).
-- Free-shipping threshold of ₹2,000 is an assumption (§15.4).
-
-### 4. Not connected to anything
-
-These are wired in the UI and clearly say so when used:
-
-- Checkout / payment gateway (UPI, cards, netbanking, wallets, COD — §7.5)
-- Pincode serviceability check
-- Order tracking
-- Accounts
-- Newsletter list provider
-
-### 5. Absolute URLs
-
-`og:image`, `twitter:image` and `og:url` are relative. Most crawlers will not resolve them.
-Set them to absolute URLs on the real domain, and update `robots.txt` and `sitemap.xml`,
-which both currently say `example.com`.
+All 19 in-app routes render, the buy flow works from a cold deep link, and there are no
+console errors. Touch targets meet 44x44 across the bag, filters and every view.
 
 ---
 
-## Known trade-off: hash routing and SEO
+## Known trade-offs
 
-§1 mandates a single `index.html` with no build step, so routes are hash-based
-(`#/shop/shirts`, `#/product/handspun-indigo-shirt`). Search engines treat every hash URL as
-the same page, so **only the homepage is indexable**. Product and category pages will not rank,
-and link previews are identical for every route.
+**CSP allows `'unsafe-inline'`.** Guideline §11 requires all CSS and JS inline in one file
+with no build step, which rules out nonces or hashes. This is the one place the single-file
+constraint costs real hardening. If you ever accept a build step, switch to per-deploy hashes
+and drop `'unsafe-inline'`.
 
-That is fine for a demo or a soft launch. If organic search matters commercially, the fix is
-real server paths (`/shop/shirts`), which means either a static generator emitting one HTML
-file per route, or a host with server-side rendering. That conflicts with the "no build step"
-rule, so it is a decision for the brand owner rather than something to change silently.
+**Product pages need JavaScript.** The homepage catalogue renders without it — 12 products
+with prices and clusters — and a `<noscript>` notice says what is unavailable. Filters, the
+bag and product detail do not work with JS off.
 
-## Imagery
+**Image caching is one week, not one year.** Filenames are unhashed (`hero.webp`, not
+`hero.a1b2c3.webp`), so an immutable long cache would strand visitors on an old photo after
+a reshoot. Rename a file if you need instant busting.
 
-All 27 photographs are placeholders sourced from Unsplash under its free licence, showing
-cloth and garments only — no people, which also avoids needing model releases. They are not
-this brand's products. Replace with a real shoot against the §9.1 five-shot list before launch;
-§6.3's hover-to-on-model swap also needs that second shot per product.
+---
+
+## If this ever becomes a real shop
+
+None of the below is done, and none of it can be invented:
+
+- **Legal identity:** registered business name, address and GSTIN. Currently "Not applicable
+  — demo project".
+- **Grievance officer:** a named officer with contact details is required by the Consumer
+  Protection (E-Commerce) Rules, 2020.
+- **Policy review:** privacy, terms and returns are realistic sample copy written to the right
+  shape. They are not legal advice and need a lawyer.
+- **The handmade claim:** "handmade, no machines" is a commercial claim. §13 wants it backed
+  by Handloom Mark, Craftmark or Silk Mark, naming which.
+- **Trademark:** "West India Company" echoes a live UK trademark and carries a colonial
+  association in the Indian market. Clearance would be needed.
+- **Checkout, payments, accounts, order tracking and the newsletter** are not connected. Each
+  says so plainly when used rather than failing silently.
+- **Product data** — all 13 products, prices, stock and Loom Records — is placeholder. The
+  "Woven by" row is deliberately omitted rather than filled with an invented name.
+- **Photography** is Unsplash stock showing cloth only, not this brand's products.

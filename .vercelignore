@@ -1,0 +1,13 @@
+# Development-only. None of this belongs on the deployed site.
+node_modules/
+temporary screenshots/
+brand assets/
+serve.mjs
+screenshot.mjs
+prerender.mjs
+package.json
+package-lock.json
+CLAUDE.md
+DEPLOY.md
+_headers
+.git/
