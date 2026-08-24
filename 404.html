@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page not found — West India Company</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400&family=Inter:wght@400;500&display=swap">
+<style>
+  :root {
+    --ink: #171717; --ink-muted: #5F5C57; --bg: #EFEAE0; --surface: #FFFFFF;
+    --indigo: #22335C; --line: #DCD5C8;
+    --font-display: "Fraunces", Georgia, serif;
+    --font-body: "Inter", system-ui, -apple-system, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; background: var(--bg); color: var(--ink);
+    font-family: var(--font-body); font-size: 1rem; line-height: 1.6;
+    display: grid; place-items: center; padding: 24px;
+    -webkit-font-smoothing: antialiased;
+  }
+  main { width: 100%; max-width: 46ch; }
+  .mark { color: var(--ink); margin-bottom: 48px; display: block; }
+  .label {
+    font-size: 0.86rem; font-weight: 500; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--ink-muted); margin: 0 0 16px;
+  }
+  h1 {
+    font-family: var(--font-display); font-weight: 400;
+    font-size: clamp(2.25rem, 1.6rem + 3.25vw, 4.25rem);
+    line-height: 1.02; letter-spacing: -0.025em; margin: 0 0 24px;
+  }
+  p { color: var(--ink-muted); margin: 0 0 32px; }
+  .rule {
+    height: 6px; border: 0; margin: 0 0 32px;
+    background: repeating-linear-gradient(90deg, var(--ink) 0 1px, transparent 1px 5px);
+    opacity: 0.35;
+  }
+  ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+  a { color: inherit; }
+  ul a {
+    display: inline-flex; align-items: center; min-height: 44px; min-width: 44px;
+    text-decoration: none; color: var(--ink-muted); font-size: 0.86rem;
+    transition: color 160ms cubic-bezier(0.2, 0, 0, 1);
+  }
+  ul a:hover { color: var(--ink); }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-height: 44px; padding: 12px 32px; border-radius: 2px;
+    background: var(--ink); color: var(--surface); text-decoration: none;
+    font-size: 0.86rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+    transition: opacity 160ms cubic-bezier(0.2, 0, 0, 1);
+  }
+  .btn:hover { opacity: 0.85; }
+  :focus-visible { outline: 2px solid var(--indigo); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: 0.01ms !important; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <a class="mark" href="/" aria-label="West India Company — home">
+    <svg width="34" height="34" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="butt" aria-hidden="true">
+      <path d="M12 4V44" stroke-width="5.2"/><path d="M24 4V44" stroke-width="4.4"/><path d="M36 4V44" stroke-width="5"/>
+      <path d="M4 12H9.4M14.6 12H33.5M38.5 12H44" stroke-width="4.6"/>
+      <path d="M4 24H21.8M26.2 24H44" stroke-width="5.2"/>
+      <path d="M4 36H9.4M14.6 36H33.5M38.5 36H44" stroke-width="4.4"/>
+    </svg>
+  </a>
+  <p class="label">404</p>
+  <h1>This page has come off the loom.</h1>
+  <hr class="rule">
+  <p>The page you asked for is not here. Start from the shop, or pick one of the larger categories.</p>
+  <p><a class="btn" href="/#/shop">Shop everything</a></p>
+  <ul>
+    <li><a href="/#/shop/shirts">Shirts</a></li>
+    <li><a href="/#/shop/kurtas">Kurtas</a></li>
+    <li><a href="/#/shop/sarees">Sarees &amp; Drapes</a></li>
+    <li><a href="/#/shop/fabric">Fabric by the Metre</a></li>
+  </ul>
+</main>
+</body>
+</html>

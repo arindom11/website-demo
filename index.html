@@ -21,6 +21,12 @@
 <!-- TODO: og:url, twitter:image and og:image must be absolute URLs on the real
      domain before launch — relative paths do not resolve in most crawlers. -->
 
+<!-- The hero is the LCP element. Preload it at the same widths the <img> asks
+     for so the fetch starts before the CSS is parsed. -->
+<link rel="preload" as="image" href="images/hero.webp"
+      imagesrcset="images/hero.webp 1000w, images/hero@2x.webp 2000w"
+      imagesizes="(min-width: 1024px) 52vw, 100vw" fetchpriority="high">
+
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="theme-color" content="#EFEAE0">
@@ -1028,6 +1034,22 @@ button { font: inherit; color: inherit; }
 .table-scroll { overflow-x: auto; }
 
 .notfound { padding-block: var(--s-10) var(--s-11); }
+
+/* Draft legal copy: unfilled values are deliberately loud so they cannot
+   ship unnoticed. Remove .fill spans once the real values are in. */
+.draft-note {
+  border-left: 2px solid var(--madder);
+  padding: var(--s-3) var(--s-4);
+  background: var(--surface);
+  font-size: var(--step--1);
+  margin-bottom: var(--s-6);
+}
+.fill {
+  color: var(--madder);
+  border-bottom: 1px dotted var(--madder);
+  font-weight: 500;
+}
+.prose strong { font-weight: 500; color: var(--ink); }
 .notfound h1 { margin-bottom: var(--s-5); }
 
 /* ============================================================
@@ -2876,39 +2898,142 @@ button { font: inherit; color: inherit; }
       '<p>TODO: these measurements are placeholders. Replace with figures taken from actual production samples before launch.</p>' },
 
     'shipping': { eyebrow: 'Help', title: 'Shipping &amp; returns', body:
-      '<h2>Shipping</h2>' +
-      '<p>Free shipping on orders over ₹2,000. Below that, ₹99 flat across India. Cash on delivery is available.</p>' +
-      '<p>TODO: confirm the ₹2,000 threshold against margin (§15.4), and state dispatch time, courier partner and COD availability by region.</p>' +
-      '<h2>Returns</h2>' +
-      '<p>TODO: a published returns and refunds policy with a stated window, who pays return shipping, and the refund timeline is legally required for Indian e-commerce (§13). It must be written before launch.</p>' +
-      '<h2>Grievance officer</h2>' +
-      '<p>TODO: name, email and phone of the grievance officer are required under the Consumer Protection (E-Commerce) Rules.</p>' },
+      '<p class="draft-note">Draft. Every <span class="fill">highlighted value</span> must be confirmed by the business before launch.</p>' +
+      '<h2>Where we ship</h2>' +
+      '<p>Across India only. We do not ship internationally yet — currency, duties and size conversion all need settling first.</p>' +
+      '<h2>Charges</h2>' +
+      '<p>Free shipping on orders over ₹2,000. Below that, ₹99 flat. Prices and shipping are inclusive of GST.</p>' +
+      '<h2>Dispatch and delivery</h2>' +
+      '<ul>' +
+      '<li>Orders are dispatched within <span class="fill">[dispatch time, e.g. 2 working days]</span> of payment clearing.</li>' +
+      '<li>We ship with <span class="fill">[courier partner]</span>. Delivery usually takes <span class="fill">[delivery window by zone]</span>.</li>' +
+      '<li>You get a tracking link by email and SMS when the parcel leaves us.</li>' +
+      '<li>Cash on delivery is available <span class="fill">[COD availability and any pincode limits]</span>.</li>' +
+      '</ul>' +
+      '<p>Cloth woven by hand is made in small runs. If a piece is on the loom rather than on the shelf we will tell you the date before we take the order, not after.</p>' +
+      '<h2>Returns in short</h2>' +
+      '<p>Return anything unworn within <span class="fill">[return window, e.g. 7 days]</span> of delivery. Full terms are on the <a href="#/returns" style="color: var(--indigo);">returns and refunds</a> page.</p>' +
+      '<h2>Grievances</h2>' +
+      '<p>If something goes wrong and we have not fixed it, the <a href="#/grievance" style="color: var(--indigo);">grievance officer</a> is obliged to respond.</p>' },
 
     'contact': { eyebrow: 'Contact', title: 'Talk to us', body:
-      '<p>We answer email within two working days.</p>' +
-      '<h2>Details</h2>' +
-      '<ul><li>Email: TODO</li><li>Phone and hours: TODO</li><li>Registered business name: TODO</li><li>Registered address: TODO</li><li>GSTIN: TODO</li></ul>' +
-      '<p>TODO: all of the above are legally required in the footer and on this page for Indian e-commerce (§13). They cannot be invented and must be supplied by the business.</p>' },
+      '<p class="draft-note">Draft. Every <span class="fill">highlighted value</span> must be supplied by the business before launch — these are legally required for Indian e-commerce.</p>' +
+      '<p>We answer email within two working days. If you write about an order, include the order number.</p>' +
+      '<h2>Get in touch</h2>' +
+      '<ul>' +
+      '<li>Email: <span class="fill">[support email]</span></li>' +
+      '<li>Phone: <span class="fill">[support phone]</span>, <span class="fill">[hours, e.g. Mon–Sat 10:00–18:00 IST]</span></li>' +
+      '</ul>' +
+      '<h2>Registered business</h2>' +
+      '<ul>' +
+      '<li>Registered name: <span class="fill">[registered business name]</span></li>' +
+      '<li>Registered address: <span class="fill">[registered address]</span></li>' +
+      '<li>GSTIN: <span class="fill">[GSTIN]</span></li>' +
+      '</ul>' +
+      '<h2>Grievance officer</h2>' +
+      '<p>See the <a href="#/grievance" style="color: var(--indigo);">grievance officer</a> page.</p>' },
 
     'account': { eyebrow: 'Account', title: 'Account', body:
       '<p>Accounts are not connected yet. You can order without one — checkout never forces you to create an account, and we offer it only after the order is placed.</p>' +
-      '<p>TODO: wire to the auth provider before launch.</p>' },
+      '<p class="draft-note">Not connected: wire to the auth provider before launch.</p>' },
 
     'track': { eyebrow: 'Help', title: 'Track an order', body:
-      '<p>Order tracking is not connected yet. Once it is, you will be able to enter an order number and see the courier status here.</p>' +
-      '<p>TODO: wire to the courier tracking API.</p>' },
+      '<p>Order tracking is not connected yet. Once it is, you will be able to enter an order number here and see the courier status.</p>' +
+      '<p>In the meantime, the tracking link in your dispatch email works, or write to us with the order number.</p>' +
+      '<p class="draft-note">Not connected: wire to the courier tracking API before launch.</p>' },
 
     'privacy': { eyebrow: 'Legal', title: 'Privacy policy', body:
-      '<p>TODO: a privacy policy is required and must be written for this business. It needs to state what personal data is collected at checkout, how long it is kept, who it is shared with (courier, payment gateway), and how a customer can request deletion.</p>' },
+      '<p class="draft-note">Draft for review by a lawyer. Every <span class="fill">highlighted value</span> must be supplied by the business.</p>' +
+      '<p>This policy explains what <span class="fill">[registered business name]</span> collects when you use this site, why, and what you can ask us to do about it.</p>' +
+      '<h2>What we collect</h2>' +
+      '<ul>' +
+      '<li><strong>When you order:</strong> name, delivery address, pincode, email, phone number and what you bought.</li>' +
+      '<li><strong>When you sign up to the newsletter:</strong> your email address only.</li>' +
+      '<li><strong>When you browse:</strong> your bag is kept in your own browser storage on your device. It is not sent to us until you order.</li>' +
+      '</ul>' +
+      '<p>We do not store card or UPI details. Payments are handled by <span class="fill">[payment gateway]</span>, who process them under their own policy.</p>' +
+      '<h2>Cookies and tracking</h2>' +
+      '<p>This site sets no advertising cookies, runs no third-party analytics and does not track you across other sites. The only thing stored on your device is your shopping bag. That is why you are not being asked to accept cookies.</p>' +
+      '<h2>Why we use it</h2>' +
+      '<ul>' +
+      '<li>To take payment, pack and deliver your order, and handle returns.</li>' +
+      '<li>To answer you when you contact us.</li>' +
+      '<li>To send the newsletter, only if you asked for it. Every email has an unsubscribe link.</li>' +
+      '<li>To keep the tax and accounting records the law requires.</li>' +
+      '</ul>' +
+      '<h2>Who we share it with</h2>' +
+      '<p>Only those who need it to complete your order: our courier, our payment gateway, and our email provider. We do not sell your data to anyone, ever.</p>' +
+      '<h2>How long we keep it</h2>' +
+      '<p>Order and invoice records are kept for <span class="fill">[retention period — check the statutory GST record-keeping requirement]</span>. Newsletter subscriptions are kept until you unsubscribe.</p>' +
+      '<h2>Your rights</h2>' +
+      '<p>You can ask us to show you what we hold, correct it, or delete it, and you can withdraw consent for marketing at any time. Write to <span class="fill">[support email]</span> and we will respond within <span class="fill">[response window]</span>. We may need to keep records the law obliges us to keep.</p>' +
+      '<h2>Security</h2>' +
+      '<p>The site is served over HTTPS. Payment details never reach our servers. If a breach ever affects your data we will tell you and the authorities as the law requires.</p>' +
+      '<h2>Children</h2>' +
+      '<p>This shop is not intended for children, and we do not knowingly collect their data.</p>' +
+      '<h2>Changes and contact</h2>' +
+      '<p>If this policy changes we will post the new version here with its date. Questions go to <span class="fill">[support email]</span>, or to the <a href="#/grievance" style="color: var(--indigo);">grievance officer</a>.</p>' +
+      '<p>Last updated: <span class="fill">[date of publication]</span>.</p>' },
 
-    'terms': { eyebrow: 'Legal', title: 'Terms', body:
-      '<p>TODO: terms of sale are required and must be written for this business, covering order acceptance, pricing errors, cancellation and governing law.</p>' },
+    'terms': { eyebrow: 'Legal', title: 'Terms of sale', body:
+      '<p class="draft-note">Draft for review by a lawyer. Every <span class="fill">highlighted value</span> must be supplied by the business.</p>' +
+      '<p>These terms cover anything you buy from this site. Buying from us means you accept them.</p>' +
+      '<h2>Who you are buying from</h2>' +
+      '<p><span class="fill">[registered business name]</span>, <span class="fill">[registered address]</span>, GSTIN <span class="fill">[GSTIN]</span>.</p>' +
+      '<h2>Orders</h2>' +
+      '<p>Placing an order is an offer to buy. The contract starts when we email you to confirm dispatch, not when you pay. If we cannot fulfil an order we will say so and refund you in full.</p>' +
+      '<h2>Prices</h2>' +
+      '<p>All prices are in Indian rupees and inclusive of GST. If a price is listed wrongly through an obvious error we will contact you before dispatch and you can confirm at the correct price or cancel for a full refund.</p>' +
+      '<h2>Payment</h2>' +
+      '<p>We accept UPI, cards, netbanking, wallets and cash on delivery. Card and UPI details are handled by our payment gateway and never reach us.</p>' +
+      '<h2>Handwoven cloth varies</h2>' +
+      '<p>Every piece is woven by hand, so no two are identical. Slight irregularity in the weave, small variations in the width of a stripe, and shade differences between batches of natural dye are characteristics of handloom cloth, not defects, and are not grounds for return as faulty. Genuine faults are, and are covered by the <a href="#/returns" style="color: var(--indigo);">returns policy</a>.</p>' +
+      '<h2>Cancellation</h2>' +
+      '<p>You can cancel any time before dispatch for a full refund. After dispatch, use the returns process.</p>' +
+      '<h2>Our liability</h2>' +
+      '<p>Nothing here limits your rights under the Consumer Protection Act, 2019, or any liability that cannot lawfully be limited.</p>' +
+      '<h2>Governing law</h2>' +
+      '<p>These terms are governed by the laws of India, and the courts at <span class="fill">[jurisdiction city]</span> have exclusive jurisdiction.</p>' +
+      '<p>Last updated: <span class="fill">[date of publication]</span>.</p>' },
 
     'returns': { eyebrow: 'Legal', title: 'Returns &amp; refunds', body:
-      '<p>TODO: see the shipping and returns page. A published policy with a stated window and refund timeline is legally required (§13) and has not been supplied.</p>' },
+      '<p class="draft-note">Draft for review by a lawyer. Every <span class="fill">highlighted value</span> must be confirmed by the business.</p>' +
+      '<h2>The window</h2>' +
+      '<p>Return anything within <span class="fill">[return window, e.g. 7 days]</span> of delivery, unworn and unwashed, with tags on and in its original packing.</p>' +
+      '<h2>How to start one</h2>' +
+      '<p>Write to <span class="fill">[support email]</span> with your order number and what you want to return. We reply with a pickup date or a return address within <span class="fill">[response window]</span>.</p>' +
+      '<h2>Who pays return shipping</h2>' +
+      '<ul>' +
+      '<li>If the piece is faulty, wrong or damaged in transit, we pay, and we will collect it.</li>' +
+      '<li>If you changed your mind, <span class="fill">[who pays — state clearly, including any deduction]</span>.</li>' +
+      '</ul>' +
+      '<h2>Refunds</h2>' +
+      '<p>Once the piece reaches us and passes a condition check, we refund within <span class="fill">[refund timeline, e.g. 7 working days]</span> to the original payment method. Cash-on-delivery orders are refunded by bank transfer to an account you give us. Shipping charges you paid are refunded when the return is our fault.</p>' +
+      '<h2>Exchanges</h2>' +
+      '<p>For a different size, return for a refund and place a new order — handloom stock is small and we cannot reserve a piece while one is in transit.</p>' +
+      '<h2>What cannot be returned</h2>' +
+      '<ul>' +
+      '<li>Fabric cut to order by the metre, since it cannot be resold.</li>' +
+      '<li>Anything altered, worn, washed or damaged after delivery.</li>' +
+      '<li>The natural variation of handwoven cloth described in the <a href="#/terms" style="color: var(--indigo);">terms</a>. A genuine fault is always covered.</li>' +
+      '</ul>' +
+      '<h2>Damaged or wrong on arrival</h2>' +
+      '<p>Tell us within <span class="fill">[reporting window, e.g. 48 hours]</span> with a photograph and we will replace it or refund it in full, including shipping.</p>' +
+      '<p>Last updated: <span class="fill">[date of publication]</span>.</p>' },
 
     'grievance': { eyebrow: 'Legal', title: 'Grievance officer', body:
-      '<p>TODO: the Consumer Protection (E-Commerce) Rules require a named grievance officer with contact details and a stated response window. These must be supplied by the business.</p>' }
+      '<p class="draft-note">Draft. Every <span class="fill">highlighted value</span> must be supplied by the business — a named officer is required by law.</p>' +
+      '<p>Under the Consumer Protection (E-Commerce) Rules, 2020, we name an officer responsible for complaints. If we have not resolved something, write to them directly.</p>' +
+      '<h2>Officer</h2>' +
+      '<ul>' +
+      '<li>Name: <span class="fill">[grievance officer name]</span></li>' +
+      '<li>Designation: <span class="fill">[designation]</span></li>' +
+      '<li>Email: <span class="fill">[grievance officer email]</span></li>' +
+      '<li>Phone: <span class="fill">[grievance officer phone]</span>, <span class="fill">[hours]</span></li>' +
+      '<li>Address: <span class="fill">[registered address]</span></li>' +
+      '</ul>' +
+      '<h2>What happens</h2>' +
+      '<p>We acknowledge a complaint within 48 hours of receiving it and aim to resolve it within one month, as the Rules require. Please include your order number and what you would like done.</p>' }
   };
 
   function renderPage(key) {

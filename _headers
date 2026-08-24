@@ -1,0 +1,36 @@
+# Netlify / Cloudflare Pages header rules.
+# Vercel users: see vercel.json. Other hosts: translate these by hand.
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), camera=(), microphone=(), payment=(), usb=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  X-Frame-Options: DENY
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; form-action 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none'; upgrade-insecure-requests
+
+# NOTE on 'unsafe-inline': the brand guideline (section 11) requires a single
+# index.html with all CSS and JS inline and no build step. That rules out
+# nonces or hashes, which would have to be regenerated on every edit. This is
+# the one place the single-file constraint costs real security hardening. If
+# you later accept a build step, switch to per-deploy hashes and drop
+# 'unsafe-inline'.
+
+# HTML must revalidate so a redeploy is picked up immediately.
+/
+  Cache-Control: public, max-age=0, must-revalidate
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Images are cached for a week, NOT a year: filenames are stable (hero.webp,
+# not hero.a1b2c3.webp), so an immutable year-long cache would strand viewers
+# on an old photo after a reshoot. Rename the file if you need instant busting.
+/images/*
+  Cache-Control: public, max-age=604800
+
+/favicon.svg
+  Cache-Control: public, max-age=604800
+/apple-touch-icon.png
+  Cache-Control: public, max-age=604800
+/og-image.jpg
+  Cache-Control: public, max-age=604800
