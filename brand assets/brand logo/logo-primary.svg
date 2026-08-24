@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 268 64" role="img" aria-label="West India Company">
+  <title>West India Company</title>
+  <g fill="none" stroke="currentColor" stroke-linecap="butt" transform="translate(0 10) scale(0.9167)">
+    <path d="M12 4V44" stroke-width="5.2"/>
+    <path d="M24 4V44" stroke-width="4.4"/>
+    <path d="M36 4V44" stroke-width="5"/>
+    <path d="M4 12H9.4M14.6 12H33.5M38.5 12H44" stroke-width="4.6"/>
+    <path d="M4 24H21.8M26.2 24H44" stroke-width="5.2"/>
+    <path d="M4 36H9.4M14.6 36H33.5M38.5 36H44" stroke-width="4.4"/>
+  </g>
+  <g fill="currentColor" font-family="Fraunces, Georgia, 'Times New Roman', serif" font-size="21" font-weight="400" letter-spacing="3">
+    <text x="66" y="30">WEST INDIA</text>
+    <text x="66" y="52">COMPANY</text>
+  </g>
+</svg>

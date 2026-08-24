@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  TODO: replace example.com with the real domain before launch.
+
+  NOTE: this site is hash-routed (#/shop, #/product/...) because §1 of the
+  brand guideline requires a single index.html with no build step. Search
+  engines treat every hash URL as the same page, so only the root is listed
+  here. If organic search matters for launch, the routes below need to become
+  real server paths — see DEPLOY.md.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://example.com/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>

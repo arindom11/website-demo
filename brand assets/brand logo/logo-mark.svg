@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="West India Company">
+  <title>West India Company</title>
+  <g fill="none" stroke="currentColor" stroke-linecap="butt">
+    <!-- warp: vertical threads, uneven by hand -->
+    <path d="M12 4V44" stroke-width="5.2"/>
+    <path d="M24 4V44" stroke-width="4.4"/>
+    <path d="M36 4V44" stroke-width="5"/>
+    <!-- weft: horizontal threads, broken where they pass under the warp -->
+    <path d="M4 12H9.4M14.6 12H33.5M38.5 12H44" stroke-width="4.6"/>
+    <path d="M4 24H21.8M26.2 24H44" stroke-width="5.2"/>
+    <path d="M4 36H9.4M14.6 36H33.5M38.5 36H44" stroke-width="4.4"/>
+  </g>
+</svg>
